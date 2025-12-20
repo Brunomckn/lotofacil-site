@@ -52,20 +52,30 @@ document.addEventListener("DOMContentLoaded", function () {
             body: JSON.stringify({ dezenas: selecionadas })
         })
         .then(res => res.json())
-        .then(data => {
-            resultado.innerHTML = `
-                <p><strong>Total de concursos:</strong> ${data.total_concursos}</p>
-                <hr>
-                <p>11 pontos: ${data.acertos["11"]}</p>
-                <p>12 pontos: ${data.acertos["12"]}</p>
-                <p>13 pontos: ${data.acertos["13"]}</p>
-                <p>14 pontos: ${data.acertos["14"]}</p>
-                <p>15 pontos: ${data.acertos["15"]}</p>
-            `;
-        })
+       .then(data => {
+    const total = data.total_concursos;
+
+    function linha(pontos) {
+        const qtd = data.acertos[pontos];
+        const perc = ((qtd / total) * 100).toFixed(2);
+        return `<p>${pontos} pontos: ${qtd} (${perc}%)</p>`;
+    }
+
+    resultado.innerHTML = `
+        <p><strong>Total de concursos analisados:</strong> ${total}</p>
+        <hr>
+        ${linha("11")}
+        ${linha("12")}
+        ${linha("13")}
+        ${linha("14")}
+        ${linha("15")}
+    `;
+});
+
         .catch(() => {
             resultado.innerHTML = "<p>Erro ao conectar com a API</p>";
         });
     });
 
 });
+
