@@ -1,170 +1,179 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-  var btnAnterior = document.getElementById("anterior");
-var btnProximo = document.getElementById("proximo");
-var infoConcurso = document.getElementById("info-concurso");
-var dezenasSorteadas = document.getElementById("dezenas-sorteadas");
+    var grid = document.getElementById("grid");
+    var contador = document.getElementById("contador");
+    var resultado = document.getElementById("resultado");
 
-var historico = [];
-var indiceAtual = 0;
+    var btnConferir = document.getElementById("conferir");
+    var btnLimpar = document.getElementById("limpar");
+    var btnSalvar = document.getElementById("salvar");
 
-// carregar histórico quando houver jogo salvo
-if (localStorage.getItem("jogo_salvo")) {
-    fetch("https://lotofacil-api-omfo.onrender.com/historico_jogo", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            dezenas: JSON.parse(localStorage.getItem("jogo_salvo"))
-        })
-    })
-    .then(function (res) { return res.json(); })
-    .then(function (data) {
-        historico = data.historico;
-        indiceAtual = 0;
-        mostrarConcurso();
-    });
-}
+    var btnAnterior = document.getElementById("anterior");
+    var btnProximo = document.getElementById("proximo");
 
-function mostrarConcurso() {
-    if (!historico.length) return;
+    var infoConcurso = document.getElementById("info-concurso");
+    var dezenasSorteadas = document.getElementById("dezenas-sorteadas");
+    var statusSalvo = document.getElementById("status-salvo");
 
-    var item = historico[indiceAtual];
-
-    infoConcurso.innerHTML =
-        "<strong>Concurso:</strong> " + item.concurso +
-        " | <strong>Acertos:</strong> " + item.acertos;
-
-    dezenasSorteadas.innerHTML =
-        "<strong>Dezenas sorteadas:</strong><br>" +
-        item.dezenas_sorteadas.join(" - ");
-}
-
-btnAnterior.addEventListener("click", function () {
-    if (indiceAtual > 0) {
-        indiceAtual--;
-        mostrarConcurso();
-    }
-});
-
-btnProximo.addEventListener("click", function () {
-    if (indiceAtual < historico.length - 1) {
-        indiceAtual++;
-        mostrarConcurso();
-    }
-});
-
-    const grid = document.getElementById("grid");
-    const contador = document.getElementById("contador");
-    const resultado = document.getElementById("resultado");
-
-    const btnConferir = document.getElementById("conferir");
-    const btnLimpar = document.getElementById("limpar");
-    const btnSalvar = document.getElementById("salvar");
-    const statusSalvo = document.getElementById("status-salvo");
-
-    let selecionadas = [];
+    var selecionadas = [];
+    var historico = [];
+    var indiceAtual = 0;
 
     // =========================
     // CRIAR DEZENAS (01 a 25)
     // =========================
-    for (let i = 1; i <= 25; i++) {
-        const d = document.createElement("div");
-        d.className = "dezena";
-        d.textContent = i.toString().padStart(2, "0");
+    for (var i = 1; i <= 25; i++) {
+        (function (num) {
+            var d = document.createElement("div");
+            d.className = "dezena";
+            d.innerHTML = (num < 10 ? "0" : "") + num;
 
-        d.addEventListener("click", () => {
-            if (selecionadas.includes(i)) {
-                selecionadas = selecionadas.filter(n => n !== i);
-                d.classList.remove("selecionada");
-            } else {
-                if (selecionadas.length >= 15) return;
-                selecionadas.push(i);
-                d.classList.add("selecionada");
-            }
-            contador.textContent = `${selecionadas.length}/15 selecionadas`;
-        });
+            d.addEventListener("click", function () {
+                var idx = selecionadas.indexOf(num);
+                if (idx !== -1) {
+                    selecionadas.splice(idx, 1);
+                    d.classList.remove("selecionada");
+                } else {
+                    if (selecionadas.length >= 15) return;
+                    selecionadas.push(num);
+                    d.classList.add("selecionada");
+                }
+                contador.innerHTML = selecionadas.length + "/15 selecionadas";
+            });
 
-        grid.appendChild(d);
+            grid.appendChild(d);
+        })(i);
     }
 
     // =========================
     // LIMPAR JOGO
     // =========================
-    btnLimpar.addEventListener("click", () => {
+    btnLimpar.addEventListener("click", function () {
         selecionadas = [];
-        document.querySelectorAll(".dezena").forEach(d => d.classList.remove("selecionada"));
-        contador.textContent = "0/15 selecionadas";
+        var ds = document.querySelectorAll(".dezena");
+        for (var i = 0; i < ds.length; i++) {
+            ds[i].classList.remove("selecionada");
+        }
+        contador.innerHTML = "0/15 selecionadas";
         resultado.innerHTML = "";
-        statusSalvo.textContent = "";
+        infoConcurso.innerHTML = "";
+        dezenasSorteadas.innerHTML = "";
+        statusSalvo.innerHTML = "";
         localStorage.removeItem("jogo_salvo");
     });
 
     // =========================
-    // CONFERIR HISTÓRICO
+    // SALVAR JOGO
     // =========================
-    btnConferir.addEventListener("click", () => {
+    btnSalvar.addEventListener("click", function () {
+        if (selecionadas.length !== 15) {
+            alert("Selecione exatamente 15 dezenas para salvar");
+            return;
+        }
+        localStorage.setItem("jogo_salvo", JSON.stringify(selecionadas));
+        statusSalvo.innerHTML = "✅ Jogo salvo com sucesso!";
+        carregarHistorico();
+    });
+
+    // =========================
+    // CONFERIR HISTÓRICO GERAL
+    // =========================
+    btnConferir.addEventListener("click", function () {
         if (selecionadas.length !== 15) {
             alert("Selecione exatamente 15 dezenas");
             return;
         }
 
-        resultado.innerHTML = "<p>Conferindo...</p>";
+        resultado.innerHTML = "Conferindo...";
 
         fetch("https://lotofacil-api-omfo.onrender.com/conferir", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ dezenas: selecionadas })
         })
-        .then(res => res.json())
-        .then(data => {
-            resultado.innerHTML = `
-                <p><strong>Total de concursos analisados:</strong> ${data.total_concursos}</p>
-                <hr>
-                <p>11 pontos: ${data.acertos["11"]}</p>
-                <p>12 pontos: ${data.acertos["12"]}</p>
-                <p>13 pontos: ${data.acertos["13"]}</p>
-                <p>14 pontos: ${data.acertos["14"]}</p>
-                <p>15 pontos: ${data.acertos["15"]}</p>
-            `;
-        })
-        .catch(() => {
-            resultado.innerHTML = "<p>Erro ao conectar com a API</p>";
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+            resultado.innerHTML =
+                "<p><strong>Total de concursos:</strong> " + data.total_concursos + "</p>" +
+                "<p>11 pontos: " + data.acertos["11"] + "</p>" +
+                "<p>12 pontos: " + data.acertos["12"] + "</p>" +
+                "<p>13 pontos: " + data.acertos["13"] + "</p>" +
+                "<p>14 pontos: " + data.acertos["14"] + "</p>" +
+                "<p>15 pontos: " + data.acertos["15"] + "</p>";
         });
     });
 
     // =========================
-    // SALVAR JOGO (localStorage)
+    // CARREGAR HISTÓRICO CONCURSO A CONCURSO
     // =========================
-    btnSalvar.addEventListener("click", () => {
-        if (selecionadas.length !== 15) {
-            alert("Selecione exatamente 15 dezenas para salvar");
-            return;
-        }
+    function carregarHistorico() {
+        var salvo = localStorage.getItem("jogo_salvo");
+        if (!salvo) return;
 
-        localStorage.setItem("jogo_salvo", JSON.stringify(selecionadas));
-        statusSalvo.textContent = "✅ Jogo salvo com sucesso!";
+        fetch("https://lotofacil-api-omfo.onrender.com/historico_jogo", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ dezenas: JSON.parse(salvo) })
+        })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+            historico = data.historico;
+            indiceAtual = 0;
+            mostrarConcurso();
+        });
+    }
+
+    function mostrarConcurso() {
+        if (!historico.length) return;
+
+        var item = historico[indiceAtual];
+
+        infoConcurso.innerHTML =
+            "<strong>Concurso:</strong> " + item.concurso +
+            " | <strong>Acertos:</strong> " + item.acertos;
+
+        dezenasSorteadas.innerHTML =
+            "<strong>Dezenas sorteadas:</strong><br>" +
+            item.dezenas_sorteadas.join(" - ") +
+            "<hr>" +
+            "<strong>Premiação:</strong><br>" +
+            "15 pontos: " + item.premios["15"] + "<br>" +
+            "14 pontos: " + item.premios["14"] + "<br>" +
+            "13 pontos: " + item.premios["13"] + "<br>" +
+            "12 pontos: " + item.premios["12"] + "<br>" +
+            "11 pontos: " + item.premios["11"];
+    }
+
+    btnAnterior.addEventListener("click", function () {
+        if (indiceAtual > 0) {
+            indiceAtual--;
+            mostrarConcurso();
+        }
+    });
+
+    btnProximo.addEventListener("click", function () {
+        if (indiceAtual < historico.length - 1) {
+            indiceAtual++;
+            mostrarConcurso();
+        }
     });
 
     // =========================
-    // CARREGAR JOGO SALVO
+    // CARREGAR JOGO AO ABRIR
     // =========================
-    const jogoSalvo = localStorage.getItem("jogo_salvo");
-
+    var jogoSalvo = localStorage.getItem("jogo_salvo");
     if (jogoSalvo) {
         selecionadas = JSON.parse(jogoSalvo);
-
-        document.querySelectorAll(".dezena").forEach(d => {
-            const num = parseInt(d.textContent);
-            if (selecionadas.includes(num)) {
-                d.classList.add("selecionada");
+        var ds = document.querySelectorAll(".dezena");
+        for (var i = 0; i < ds.length; i++) {
+            var num = parseInt(ds[i].innerHTML, 10);
+            if (selecionadas.indexOf(num) !== -1) {
+                ds[i].classList.add("selecionada");
             }
-        });
-
-        contador.textContent = `${selecionadas.length}/15 selecionadas`;
-        statusSalvo.textContent = "ℹ️ Jogo carregado automaticamente";
+        }
+        contador.innerHTML = selecionadas.length + "/15 selecionadas";
+        statusSalvo.innerHTML = "ℹ️ Jogo carregado automaticamente";
+        carregarHistorico();
     }
 
 });
-
