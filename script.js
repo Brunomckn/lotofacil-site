@@ -1,5 +1,58 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+  var btnAnterior = document.getElementById("anterior");
+var btnProximo = document.getElementById("proximo");
+var infoConcurso = document.getElementById("info-concurso");
+var dezenasSorteadas = document.getElementById("dezenas-sorteadas");
+
+var historico = [];
+var indiceAtual = 0;
+
+// carregar histórico quando houver jogo salvo
+if (localStorage.getItem("jogo_salvo")) {
+    fetch("https://lotofacil-api-omfo.onrender.com/historico_jogo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            dezenas: JSON.parse(localStorage.getItem("jogo_salvo"))
+        })
+    })
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+        historico = data.historico;
+        indiceAtual = 0;
+        mostrarConcurso();
+    });
+}
+
+function mostrarConcurso() {
+    if (!historico.length) return;
+
+    var item = historico[indiceAtual];
+
+    infoConcurso.innerHTML =
+        "<strong>Concurso:</strong> " + item.concurso +
+        " | <strong>Acertos:</strong> " + item.acertos;
+
+    dezenasSorteadas.innerHTML =
+        "<strong>Dezenas sorteadas:</strong><br>" +
+        item.dezenas_sorteadas.join(" - ");
+}
+
+btnAnterior.addEventListener("click", function () {
+    if (indiceAtual > 0) {
+        indiceAtual--;
+        mostrarConcurso();
+    }
+});
+
+btnProximo.addEventListener("click", function () {
+    if (indiceAtual < historico.length - 1) {
+        indiceAtual++;
+        mostrarConcurso();
+    }
+});
+
     const grid = document.getElementById("grid");
     const contador = document.getElementById("contador");
     const resultado = document.getElementById("resultado");
@@ -114,3 +167,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
