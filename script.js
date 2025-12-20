@@ -39,6 +39,15 @@ function conferir() {
     }
 
     fetch("https://lotofacil-api-omfo.onrender.com/conferir", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        dezenas: selecionadas
+    })
+})
+
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -59,3 +68,4 @@ function conferir() {
         resultadoDiv.innerHTML = "<p>Erro ao conectar com a API</p>";
     });
 }
+
