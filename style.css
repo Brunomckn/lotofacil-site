@@ -1,4 +1,4 @@
-﻿body {
+body {
     font-family: Arial, sans-serif;
     text-align: center;
 }
@@ -12,32 +12,12 @@
 }
 
 .dezena {
-    width: 60px;
-    height: 60px;
-    border: 2px solid #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: 1px solid #333;
+    padding: 15px;
     cursor: pointer;
-    user-select: none;
 }
 
 .dezena.selecionada {
-    background-color: green;
+    background: green;
     color: white;
-}
-
-.botoes {
-    margin: 15px;
-}
-
-button {
-    padding: 10px 20px;
-    margin: 5px;
-    cursor: pointer;
-}
-
-#resultado {
-    margin-top: 20px;
-    font-size: 16px;
 }
