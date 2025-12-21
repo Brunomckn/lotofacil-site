@@ -19,6 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var historico = [];
     var indiceAtual = 0;
 
+    var usuarioPremium = false; // futuramente vira true após pagamento
+
     // =========================
     // CRIAR DEZENAS 01–25
     // =========================
@@ -185,4 +187,5 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
 
