@@ -11,17 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var btnAnterior = document.getElementById("anterior");
     var btnProximo = document.getElementById("proximo");
 
-    var btnPremium = document.getElementById("btn-premium");
-
-if (btnPremium) {
-    btnPremium.addEventListener("click", function () {
-        usuarioPremium = true;
-        localStorage.setItem("usuario_premium", "true");
-        alert("⭐ Premium desbloqueado!");
-        mostrarConcurso(); // atualiza a tela
-    });
-}
-
     var infoConcurso = document.getElementById("info-concurso");
     var dezenasSorteadas = document.getElementById("dezenas-sorteadas");
     var statusSalvo = document.getElementById("status-salvo");
@@ -29,9 +18,6 @@ if (btnPremium) {
     var selecionadas = [];
     var historico = [];
     var indiceAtual = 0;
-
-    // 🔐 FLAG PREMIUM (futuro)
-    var usuarioPremium = localStorage.getItem("usuario_premium") === "true";
 
     // =========================
     // CRIAR DEZENAS 01–25
@@ -138,33 +124,6 @@ if (btnPremium) {
     }
 
     // =========================
-    // TOTAL ACUMULADO (PREMIUM)
-    // =========================
-    function calcularTotalAcumulado() {
-        var total = 0;
-
-        for (var i = 0; i < historico.length; i++) {
-            var item = historico[i];
-
-            if (item.acertos >= 11) {
-                var premio = item.premios[item.acertos.toString()];
-                if (premio) {
-                    var valor = premio
-                        .replace("R$", "")
-                        .replace(/\./g, "")
-                        .replace(",", ".")
-                        .trim();
-
-                    var num = parseFloat(valor);
-                    if (!isNaN(num)) total += num;
-                }
-            }
-        }
-
-        return total.toFixed(2);
-    }
-
-    // =========================
     // MOSTRAR CONCURSO
     // =========================
     function mostrarConcurso() {
@@ -192,18 +151,6 @@ if (btnPremium) {
             "13 pontos: " + item.premios["13"] + "<br>" +
             "12 pontos: " + item.premios["12"] + "<br>" +
             "11 pontos: " + item.premios["11"];
-
-        // 🔒 PREMIUM SEPARADO (NÃO ATRAPALHA)
-        var totalAcumulado = calcularTotalAcumulado();
-
-        dezenasSorteadas.innerHTML +=
-            "<hr><div style='opacity:0.85'>" +
-            "<strong>Total acumulado com este jogo:</strong><br>" +
-            (usuarioPremium
-                ? "💰 R$ " + totalAcumulado
-                : "🔒 Premium – desbloqueie para ver"
-            ) +
-            "</div>";
     }
 
     btnAnterior.addEventListener("click", function () {
@@ -239,4 +186,3 @@ if (btnPremium) {
     }
 
 });
-
