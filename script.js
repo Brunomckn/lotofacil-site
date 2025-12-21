@@ -117,11 +117,11 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(function (res) { return res.json(); })
         .then(function (data) {
-            historico = data.historico;
-            indiceAtual = 0;
-            mostrarConcurso();
-        });
-    }
+    historico = data.historico;
+    indiceAtual = historico.length - 1; // começa pelo último concurso
+    mostrarConcurso();
+});
+
 
     function mostrarConcurso() {
         if (!historico.length) return;
@@ -177,3 +177,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
