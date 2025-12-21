@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var indiceAtual = 0;
 
     // =========================
-    // CRIAR DEZENAS (01 a 25)
+    // CRIAR DEZENAS 01–25
     // =========================
     for (var i = 1; i <= 25; i++) {
         (function (num) {
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // =========================
-    // LIMPAR JOGO
+    // LIMPAR
     // =========================
     btnLimpar.addEventListener("click", function () {
         selecionadas = [];
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // =========================
-    // CARREGAR HISTÓRICO CONCURSO A CONCURSO
+    // CARREGAR HISTÓRICO (COMEÇA PELO ÚLTIMO)
     // =========================
     function carregarHistorico() {
         var salvo = localStorage.getItem("jogo_salvo");
@@ -117,11 +117,11 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(function (res) { return res.json(); })
         .then(function (data) {
-    historico = data.historico;
-    indiceAtual = historico.length - 1; // começa pelo último concurso
-    mostrarConcurso();
-});
-
+            historico = data.historico;
+            indiceAtual = historico.length - 1; // ÚLTIMO CONCURSO
+            mostrarConcurso();
+        });
+    }
 
     function mostrarConcurso() {
         if (!historico.length) return;
@@ -177,4 +177,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
-
