@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var historico = [];
     var indiceAtual = 0;
 
-    var usuarioPremium = false; // futuramente vira true após pagamento
+    // 🔐 FLAG PREMIUM (futuro)
+    var usuarioPremium = false;
 
     // =========================
     // CRIAR DEZENAS 01–25
@@ -106,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // =========================
-    // CARREGAR HISTÓRICO (COMEÇA PELO ÚLTIMO)
+    // CARREGAR HISTÓRICO (ÚLTIMO → ANTERIOR)
     // =========================
     function carregarHistorico() {
         var salvo = localStorage.getItem("jogo_salvo");
@@ -120,75 +121,79 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(function (res) { return res.json(); })
         .then(function (data) {
             historico = data.historico;
-            indiceAtual = historico.length - 1; // ÚLTIMO CONCURSO
+            indiceAtual = historico.length - 1;
             mostrarConcurso();
         });
     }
 
+    // =========================
+    // TOTAL ACUMULADO (PREMIUM)
+    // =========================
     function calcularTotalAcumulado() {
-    var total = 0;
+        var total = 0;
 
-    for (var i = 0; i < historico.length; i++) {
-        var item = historico[i];
+        for (var i = 0; i < historico.length; i++) {
+            var item = historico[i];
 
-        if (item.acertos >= 11) {
-            var premio = item.premios[item.acertos.toString()];
+            if (item.acertos >= 11) {
+                var premio = item.premios[item.acertos.toString()];
+                if (premio) {
+                    var valor = premio
+                        .replace("R$", "")
+                        .replace(/\./g, "")
+                        .replace(",", ".")
+                        .trim();
 
-            if (premio) {
-                // remove R$, pontos e troca vírgula
-                var valor = premio
-                    .replace("R$", "")
-                    .replace(/\./g, "")
-                    .replace(",", ".")
-                    .trim();
-
-                var numero = parseFloat(valor);
-                if (!isNaN(numero)) {
-                    total += numero;
+                    var num = parseFloat(valor);
+                    if (!isNaN(num)) total += num;
                 }
             }
         }
+
+        return total.toFixed(2);
     }
 
-    return total.toFixed(2);
-}
+    // =========================
+    // MOSTRAR CONCURSO
+    // =========================
+    function mostrarConcurso() {
+        if (!historico.length) return;
 
-   function mostrarConcurso() {
-    if (!historico.length) return;
+        var item = historico[indiceAtual];
+        var ganhou = item.acertos >= 11;
 
-    var item = historico[indiceAtual];
-    var ganhou = item.acertos >= 11;
+        infoConcurso.innerHTML =
+            "<strong>Concurso:</strong> " + item.concurso +
+            " | <strong>Acertos:</strong> " + item.acertos;
 
-    infoConcurso.innerHTML =
-        "<strong>Concurso:</strong> " + item.concurso +
-        " | <strong>Acertos:</strong> " + item.acertos;
+        dezenasSorteadas.innerHTML =
+            "<div class='" + (ganhou ? "ganhou" : "nao-ganhou") + "'>" +
+            (ganhou
+                ? "🎉 PARABÉNS! SEU JOGO TERIA GANHADO PRÊMIO NESTE CONCURSO"
+                : "❌ Não houve premiação neste concurso"
+            ) +
+            "</div>" +
+            "<br><strong>Dezenas sorteadas:</strong><br>" +
+            item.dezenas_sorteadas.join(" - ") +
+            "<hr><strong>Premiação do concurso:</strong><br>" +
+            "15 pontos: " + item.premios["15"] + "<br>" +
+            "14 pontos: " + item.premios["14"] + "<br>" +
+            "13 pontos: " + item.premios["13"] + "<br>" +
+            "12 pontos: " + item.premios["12"] + "<br>" +
+            "11 pontos: " + item.premios["11"];
 
-    dezenasSorteadas.innerHTML =
-        "<div class='" + (ganhou ? "ganhou" : "nao-ganhou") + "'>" +
-        (ganhou
-            ? "🎉 PARABÉNS! SEU JOGO TERIA GANHADO PRÊMIO NESTE CONCURSO"
-            : "❌ Não houve premiação neste concurso"
-        ) +
-        "</div>" +
-        "<br><strong>Dezenas sorteadas:</strong><br>" +
-        item.dezenas_sorteadas.join(" - ") +
-        "<hr>" +
-        "<strong>Premiação do concurso:</strong><br>" +
-        "15 pontos: " + item.premios["15"] + "<br>" +
-        "14 pontos: " + item.premios["14"] + "<br>" +
-        "13 pontos: " + item.premios["13"] + "<br>" +
-        "12 pontos: " + item.premios["12"] + "<br>" +
-        "11 pontos: " + item.premios["11"];
-}
-var totalAcumulado = calcularTotalAcumulado();
+        // 🔒 PREMIUM SEPARADO (NÃO ATRAPALHA)
+        var totalAcumulado = calcularTotalAcumulado();
 
-dezenasSorteadas.innerHTML +=
-    "<hr><strong>Total acumulado com este jogo:</strong><br>" +
-    (usuarioPremium
-        ? "💰 R$ " + totalAcumulado
-        : "🔒 Premium – desbloqueie para ver"
-    );
-
+        dezenasSorteadas.innerHTML +=
+            "<hr><div style='opacity:0.85'>" +
+            "<strong>Total acumulado com este jogo:</strong><br>" +
+            (usuarioPremium
+                ? "💰 R$ " + totalAcumulado
+                : "🔒 Premium – desbloqueie para ver"
+            ) +
+            "</div>";
+    }
 
     btnAnterior.addEventListener("click", function () {
         if (indiceAtual > 0) {
@@ -223,6 +228,3 @@ dezenasSorteadas.innerHTML +=
     }
 
 });
-
-
-
