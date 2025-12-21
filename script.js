@@ -125,6 +125,34 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    function calcularTotalAcumulado() {
+    var total = 0;
+
+    for (var i = 0; i < historico.length; i++) {
+        var item = historico[i];
+
+        if (item.acertos >= 11) {
+            var premio = item.premios[item.acertos.toString()];
+
+            if (premio) {
+                // remove R$, pontos e troca vírgula
+                var valor = premio
+                    .replace("R$", "")
+                    .replace(/\./g, "")
+                    .replace(",", ".")
+                    .trim();
+
+                var numero = parseFloat(valor);
+                if (!isNaN(numero)) {
+                    total += numero;
+                }
+            }
+        }
+    }
+
+    return total.toFixed(2);
+}
+
    function mostrarConcurso() {
     if (!historico.length) return;
 
@@ -152,6 +180,14 @@ document.addEventListener("DOMContentLoaded", function () {
         "12 pontos: " + item.premios["12"] + "<br>" +
         "11 pontos: " + item.premios["11"];
 }
+var totalAcumulado = calcularTotalAcumulado();
+
+dezenasSorteadas.innerHTML +=
+    "<hr><strong>Total acumulado com este jogo:</strong><br>" +
+    (usuarioPremium
+        ? "💰 R$ " + totalAcumulado
+        : "🔒 Premium – desbloqueie para ver"
+    );
 
 
     btnAnterior.addEventListener("click", function () {
@@ -187,5 +223,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
 
 
