@@ -123,26 +123,34 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function mostrarConcurso() {
-        if (!historico.length) return;
+   function mostrarConcurso() {
+    if (!historico.length) return;
 
-        var item = historico[indiceAtual];
+    var item = historico[indiceAtual];
+    var ganhou = item.acertos >= 11;
 
-        infoConcurso.innerHTML =
-            "<strong>Concurso:</strong> " + item.concurso +
-            " | <strong>Acertos:</strong> " + item.acertos;
+    infoConcurso.innerHTML =
+        "<strong>Concurso:</strong> " + item.concurso +
+        " | <strong>Acertos:</strong> " + item.acertos;
 
-        dezenasSorteadas.innerHTML =
-            "<strong>Dezenas sorteadas:</strong><br>" +
-            item.dezenas_sorteadas.join(" - ") +
-            "<hr>" +
-            "<strong>Premiação:</strong><br>" +
-            "15 pontos: " + item.premios["15"] + "<br>" +
-            "14 pontos: " + item.premios["14"] + "<br>" +
-            "13 pontos: " + item.premios["13"] + "<br>" +
-            "12 pontos: " + item.premios["12"] + "<br>" +
-            "11 pontos: " + item.premios["11"];
-    }
+    dezenasSorteadas.innerHTML =
+        "<div class='" + (ganhou ? "ganhou" : "nao-ganhou") + "'>" +
+        (ganhou
+            ? "🎉 PARABÉNS! SEU JOGO TERIA GANHADO PRÊMIO NESTE CONCURSO"
+            : "❌ Não houve premiação neste concurso"
+        ) +
+        "</div>" +
+        "<br><strong>Dezenas sorteadas:</strong><br>" +
+        item.dezenas_sorteadas.join(" - ") +
+        "<hr>" +
+        "<strong>Premiação do concurso:</strong><br>" +
+        "15 pontos: " + item.premios["15"] + "<br>" +
+        "14 pontos: " + item.premios["14"] + "<br>" +
+        "13 pontos: " + item.premios["13"] + "<br>" +
+        "12 pontos: " + item.premios["12"] + "<br>" +
+        "11 pontos: " + item.premios["11"];
+}
+
 
     btnAnterior.addEventListener("click", function () {
         if (indiceAtual > 0) {
@@ -177,3 +185,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
