@@ -11,6 +11,17 @@ document.addEventListener("DOMContentLoaded", function () {
     var btnAnterior = document.getElementById("anterior");
     var btnProximo = document.getElementById("proximo");
 
+    var btnPremium = document.getElementById("btn-premium");
+
+if (btnPremium) {
+    btnPremium.addEventListener("click", function () {
+        usuarioPremium = true;
+        localStorage.setItem("usuario_premium", "true");
+        alert("⭐ Premium desbloqueado!");
+        mostrarConcurso(); // atualiza a tela
+    });
+}
+
     var infoConcurso = document.getElementById("info-concurso");
     var dezenasSorteadas = document.getElementById("dezenas-sorteadas");
     var statusSalvo = document.getElementById("status-salvo");
@@ -20,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var indiceAtual = 0;
 
     // 🔐 FLAG PREMIUM (futuro)
-    var usuarioPremium = false;
+    var usuarioPremium = localStorage.getItem("usuario_premium") === "true";
 
     // =========================
     // CRIAR DEZENAS 01–25
@@ -228,3 +239,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
