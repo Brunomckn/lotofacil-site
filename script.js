@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var btnConferir = document.getElementById("conferir");
     var btnLimpar = document.getElementById("limpar");
     var btnSalvar = document.getElementById("salvar");
-
+    var btnGerar = document.getElementById("gerar");
+    
     var btnAnterior = document.getElementById("anterior");
     var btnProximo = document.getElementById("proximo");
 
@@ -126,6 +127,66 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
     // MOSTRAR CONCURSO
     // =========================
+   function shuffle(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
+}
+function gerarJogoInteligente() {
+    var pares = [];
+    var impares = [];
+
+    for (var i = 1; i <= 25; i++) {
+        if (i % 2 === 0) pares.push(i);
+        else impares.push(i);
+    }
+
+    shuffle(pares);
+    shuffle(impares);
+
+    var jogo = [];
+
+    // 7 pares e 8 ímpares
+    jogo = jogo.concat(pares.slice(0, 7));
+    jogo = jogo.concat(impares.slice(0, 8));
+
+    // garantir 8 números de 1–13
+    var baixos = jogo.filter(n => n <= 13).length;
+    if (baixos < 8) {
+        var faltam = 8 - baixos;
+        var candidatos = [];
+        for (var i = 1; i <= 13; i++) {
+            if (!jogo.includes(i)) candidatos.push(i);
+        }
+        shuffle(candidatos);
+        for (var i = 0; i < faltam; i++) {
+            jogo.pop();
+            jogo.push(candidatos[i]);
+        }
+    }
+
+    jogo.sort(function (a, b) { return a - b; });
+
+    // evitar sequência maior que 3
+    var sequencia = 1;
+    for (var i = 1; i < jogo.length; i++) {
+        if (jogo[i] === jogo[i - 1] + 1) {
+            sequencia++;
+            if (sequencia > 3) {
+                return gerarJogoInteligente(); // refaz
+            }
+        } else {
+            sequencia = 1;
+        }
+    }
+
+    return jogo;
+}
+
     function mostrarConcurso() {
         if (!historico.length) return;
 
@@ -160,6 +221,30 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    btnGerar.addEventListener("click", function () {
+    var jogo = gerarJogoInteligente();
+
+    // limpar seleção atual
+    selecionadas = [];
+    var ds = document.querySelectorAll(".dezena");
+    for (var i = 0; i < ds.length; i++) {
+        ds[i].classList.remove("selecionada");
+    }
+
+    // marcar novo jogo
+    jogo.forEach(function (num) {
+        selecionadas.push(num);
+        for (var i = 0; i < ds.length; i++) {
+            if (parseInt(ds[i].innerHTML, 10) === num) {
+                ds[i].classList.add("selecionada");
+            }
+        }
+    });
+
+    contador.innerHTML = "15/15 selecionadas";
+    statusSalvo.innerHTML = "🎲 Jogo inteligente gerado";
+});
+
     btnProximo.addEventListener("click", function () {
         if (indiceAtual < historico.length - 1) {
             indiceAtual++;
@@ -186,3 +271,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
