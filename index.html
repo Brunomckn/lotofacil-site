@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Lotofácil – Conferir Jogos e Estatísticas</title>
+  <title>Lotofácil Inteligente – Conferir Jogos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="estilo.css">
 </head>
@@ -11,26 +11,43 @@
 
   <!-- ===== HEADER ===== -->
   <header class="topo">
-    <h1>Lotofácil Inteligente</h1>
-    <p>Confira seus jogos e veja quantas vezes eles já foram premiados</p>
+    <h1>🎯 Lotofácil Inteligente</h1>
+    <p>Confira seus jogos e analise resultados concurso a concurso</p>
   </header>
 
   <!-- ===== FERRAMENTA PRINCIPAL ===== -->
   <section id="ferramenta">
     <h2>Selecione 15 dezenas</h2>
 
-    <!-- Grade de dezenas (o JS já controla isso) -->
-    <div id="numeros" class="grade-numeros"></div>
+    <!-- GRID (ID CORRETO PARA O JS) -->
+    <div id="grid" class="grade-numeros"></div>
 
     <p id="contador">0/15 selecionadas</p>
 
     <div class="botoes">
-      <button onclick="limparSelecao()">Limpar</button>
-      <button onclick="conferir()">Conferir</button>
+      <button id="gerar">🎲 Gerar jogo inteligente</button>
+      <button id="salvar">💾 Salvar jogo</button>
+      <button id="limpar">🧹 Limpar</button>
+      <button id="conferir">📊 Conferir</button>
     </div>
 
-    <!-- Resultado -->
+    <p id="status-salvo"></p>
+
+    <!-- RESULTADO GERAL -->
     <div id="resultado" class="resultado"></div>
+  </section>
+
+  <!-- ===== HISTÓRICO CONCURSO A CONCURSO ===== -->
+  <section id="historico">
+    <h2>📅 Conferência concurso a concurso</h2>
+
+    <div class="botoes">
+      <button id="anterior">◀ Anterior</button>
+      <button id="proximo">Próximo ▶</button>
+    </div>
+
+    <p id="info-concurso"></p>
+    <div id="dezenas-sorteadas"></div>
   </section>
 
   <!-- ===== COMO FUNCIONA ===== -->
@@ -38,9 +55,10 @@
     <h2>Como funciona?</h2>
     <ul>
       <li>Selecione 15 dezenas da Lotofácil</li>
-      <li>Clique em <strong>Conferir</strong></li>
-      <li>Veja quantas vezes seu jogo já teria feito 11, 12, 13, 14 ou 15 pontos</li>
-      <li>Os dados são baseados nos concursos oficiais da Caixa</li>
+      <li>Você pode gerar um jogo inteligente automaticamente</li>
+      <li>Confira quantas vezes esse jogo já teria sido premiado</li>
+      <li>Veja os resultados concurso a concurso</li>
+      <li>Dados baseados em resultados oficiais</li>
     </ul>
   </section>
 
@@ -48,7 +66,7 @@
   <section id="aviso">
     <h3>Aviso importante</h3>
     <p>
-      Este site é apenas uma ferramenta estatística e educacional.
+      Este site é uma ferramenta estatística e educacional.
       Não vendemos apostas, não garantimos prêmios e não temos vínculo com a Caixa Econômica Federal.
     </p>
   </section>
@@ -56,10 +74,11 @@
   <!-- ===== FOOTER ===== -->
   <footer>
     <p>© 2025 – Lotofácil Inteligente</p>
-    <p>Projeto independente para estudo e análise de jogos</p>
+    <p>Projeto independente para análise estatística de jogos</p>
   </footer>
 
   <!-- JS -->
   <script src="script.js"></script>
+
 </body>
 </html>
