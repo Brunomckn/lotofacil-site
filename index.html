@@ -1,42 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Lotofácil</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Lotofácil – Conferir Jogos e Estatísticas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="estilo.css">
 </head>
+
 <body>
 
-<h2>Selecione 15 dezenas</h2>
+  <!-- ===== HEADER ===== -->
+  <header class="topo">
+    <h1>Lotofácil Inteligente</h1>
+    <p>Confira seus jogos e veja quantas vezes eles já foram premiados</p>
+  </header>
 
-<div id="grid"></div>
+  <!-- ===== FERRAMENTA PRINCIPAL ===== -->
+  <section id="ferramenta">
+    <h2>Selecione 15 dezenas</h2>
 
-<p id="contador">0/15 selecionadas</p>
-    
-<button id="gerar">🎲 Gerar jogo inteligente</button>
-<button id="limpar">Limpar</button>
-<button id="conferir">Conferir</button>
-<button id="salvar">Salvar jogo</button>
-<p id="status-salvo"></p>
+    <!-- Grade de dezenas (o JS já controla isso) -->
+    <div id="numeros" class="grade-numeros"></div>
 
-<div id="resultado"></div>
+    <p id="contador">0/15 selecionadas</p>
 
-<script src="script.js"></script>
+    <div class="botoes">
+      <button onclick="limparSelecao()">Limpar</button>
+      <button onclick="conferir()">Conferir</button>
+    </div>
+
+    <!-- Resultado -->
+    <div id="resultado" class="resultado"></div>
+  </section>
+
+  <!-- ===== COMO FUNCIONA ===== -->
+  <section id="como-funciona">
+    <h2>Como funciona?</h2>
+    <ul>
+      <li>Selecione 15 dezenas da Lotofácil</li>
+      <li>Clique em <strong>Conferir</strong></li>
+      <li>Veja quantas vezes seu jogo já teria feito 11, 12, 13, 14 ou 15 pontos</li>
+      <li>Os dados são baseados nos concursos oficiais da Caixa</li>
+    </ul>
+  </section>
+
+  <!-- ===== AVISO LEGAL ===== -->
+  <section id="aviso">
+    <h3>Aviso importante</h3>
+    <p>
+      Este site é apenas uma ferramenta estatística e educacional.
+      Não vendemos apostas, não garantimos prêmios e não temos vínculo com a Caixa Econômica Federal.
+    </p>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 – Lotofácil Inteligente</p>
+    <p>Projeto independente para estudo e análise de jogos</p>
+  </footer>
+
+  <!-- JS -->
+  <script src="script.js"></script>
 </body>
 </html>
-
-
-<hr>
-
-<h3>Concurso a concurso</h3>
-
-<div id="modo-concurso">
-    <p id="info-concurso"></p>
-    <p id="dezenas-sorteadas"></p>
-
-    <button id="anterior">◀ Anterior</button>
-    <button id="proximo">Próximo ▶</button>
-</div>
-
-
-
