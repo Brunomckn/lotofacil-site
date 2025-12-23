@@ -149,3 +149,44 @@ footer {
         font-size: 24px;
     }
 }
+/* ===== MENU FIXO ===== */
+.menu-fixo {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #162c48;
+    color: #fff;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.menu-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu-container .logo {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.menu-links a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 14px;
+}
+
+.menu-links a:hover {
+    text-decoration: underline;
+}
+
+/* ===== AJUSTE DO TOPO POR CAUSA DO MENU ===== */
+.topo-com-menu {
+    margin-top: 55px;
+}
+
