@@ -7,36 +7,22 @@ document.addEventListener("DOMContentLoaded", function () {
   const baixasAltasEl = document.getElementById("baixas-altas");
   const totalConcursosEl = document.getElementById("total-concursos");
   const ultimoConcursoEl = document.getElementById("ultimo-concurso");
-  
-  <label for="qtdConcursos">
-    Analisar últimos concursos:
-  </label>
-
-  <input
-    type="number"
-    id="qtdConcursos"
-    min="1"
-    placeholder="Ex: 50"
-    disabled
-  />
-
-  <small class="premium-info">
-    🔒 Recurso premium — escolha quantos concursos deseja analisar
-  </small>
-</div>
 
   // Se não for a página de estatísticas, não faz nada
   if (!freqContainer) return;
 
   fetch(API_URL)
     .then(res => res.json())
-    .then(resultados => {
+    .then(data => {
+
+      const resultados = data.resultados || data;
+
       const filtrados = aplicarFiltroPremium(resultados);
-calcularEstatisticas(filtrados);
+      calcularEstatisticas(filtrados);
 
     })
     .catch(() => {
-      // Falha silenciosa (API pode estar dormindo no Render)
+      // falha silenciosa (Render free pode dormir)
     });
 
   function calcularEstatisticas(resultados) {
@@ -51,6 +37,9 @@ calcularEstatisticas(filtrados);
     for (let i = 1; i <= 25; i++) freq[i] = 0;
 
     resultados.forEach(concurso => {
+
+      if (!concurso.dezenas) return;
+
       concurso.dezenas.forEach(n => {
 
         freq[n]++;
@@ -71,11 +60,9 @@ calcularEstatisticas(filtrados);
     if (totalConcursosEl)
       totalConcursosEl.innerText = resultados.length;
 
-    if (ultimoConcursoEl) {
-      const ultimo = resultados[resultados.length - 1];
+    if (ultimoConcursoEl)
       ultimoConcursoEl.innerText =
-  `Total de concursos analisados: ${resultados.length}`;
-    }
+        `Total de concursos analisados: ${resultados.length}`;
   }
 
   function mostrarFrequencia(freq) {
@@ -88,7 +75,8 @@ calcularEstatisticas(filtrados);
     lista.forEach(([dezena, vezes]) => {
       const div = document.createElement("div");
       div.className = "freq-item";
-      div.innerHTML = `<strong>${dezena.toString().padStart(2, "0")}</strong>${vezes}x`;
+      div.innerHTML =
+        `<strong>${dezena.toString().padStart(2, "0")}</strong> ${vezes}x`;
       freqContainer.appendChild(div);
     });
   }
@@ -111,7 +99,9 @@ calcularEstatisticas(filtrados);
   }
 
 });
+
 function aplicarFiltroPremium(resultados) {
+
   const input = document.getElementById("qtdConcursos");
 
   // modo gratuito → retorna tudo
