@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const totalConcursosEl = document.getElementById("total-concursos");
   const ultimoConcursoEl = document.getElementById("ultimo-concurso");
   
-<div class="premium-box">
   <label for="qtdConcursos">
     Analisar últimos concursos:
   </label>
