@@ -4,12 +4,14 @@
   <meta charset="UTF-8">
   <title>Estatísticas Lotofácil | Análise Histórica</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
   <link rel="stylesheet" href="../../css/estilo.css">
 </head>
 
 <body>
 
-<!-- MENU -->
+<!-- MENU FIXO -->
 <nav class="menu-fixo">
   <div class="menu-container">
     <span class="logo">📊 Lotofácil</span>
@@ -21,69 +23,66 @@
   </div>
 </nav>
 
+<!-- TOPO -->
 <header class="topo topo-com-menu">
   <h1>Estatísticas da Lotofácil</h1>
   <p>Análises baseadas em todos os concursos já realizados</p>
 </header>
 
+<!-- FREQUÊNCIA -->
 <section>
   <h2>📈 Frequência das Dezenas</h2>
   <p>
-    Veja quais dezenas mais e menos apareceram nos sorteios da Lotofácil.
-    Essas informações ajudam a entender o comportamento histórico do jogo.
+    Quantas vezes cada dezena apareceu nos sorteios da Lotofácil.
   </p>
 
-  <div class="resultado">
-    <p><em>Em breve: ranking das dezenas mais sorteadas.</em></p>
+  <div class="resultado" id="freq-dezenas">
+    Carregando...
   </div>
 </section>
 
+<!-- PARES x ÍMPARES -->
 <section>
   <h2>⚖️ Pares x Ímpares</h2>
   <p>
-    Estatística média de números pares e ímpares nos concursos.
+    Distribuição histórica entre números pares e ímpares.
   </p>
 
-  <div class="resultado">
-    <p><em>Em breve: distribuição histórica de pares e ímpares.</em></p>
+  <div class="resultado" id="pares-impares">
+    Carregando...
   </div>
 </section>
 
+<!-- BAIXAS x ALTAS -->
 <section>
   <h2>⬇️⬆️ Baixas e Altas</h2>
   <p>
     Comparação entre dezenas baixas (1–13) e altas (14–25).
   </p>
 
-  <div class="resultado">
-    <p><em>Em breve: análise de dezenas baixas e altas.</em></p>
+  <div class="resultado" id="baixas-altas">
+    Carregando...
   </div>
 </section>
 
-<section>
-  <h2>🔁 Repetição de Dezenas</h2>
-  <p>
-    Quantidade média de dezenas que se repetem de um concurso para outro.
-  </p>
-
-  <div class="resultado">
-    <p><em>Em breve: estatística de repetição de dezenas.</em></p>
-  </div>
-</section>
-
+<!-- AVISO -->
 <section id="aviso">
   <h3>⚠️ Aviso importante</h3>
   <p>
-    Todas as estatísticas apresentadas são baseadas em resultados passados e
+    Todas as estatísticas são baseadas em resultados passados e
     não garantem qualquer tipo de premiação futura.
     Esta é uma ferramenta estatística e educacional.
   </p>
 </section>
 
+<!-- RODAPÉ -->
 <footer>
   <p>© 2025 – Plataforma de Jogos</p>
   <p>Estatísticas históricas da Lotofácil</p>
 </footer>
+
+<!-- JS DAS ESTATÍSTICAS -->
+<script src="../../js/estatisticas-lotofacil.js"></script>
 
 </body>
 </html>
