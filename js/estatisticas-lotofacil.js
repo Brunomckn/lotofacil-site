@@ -7,6 +7,24 @@ document.addEventListener("DOMContentLoaded", function () {
   const baixasAltasEl = document.getElementById("baixas-altas");
   const totalConcursosEl = document.getElementById("total-concursos");
   const ultimoConcursoEl = document.getElementById("ultimo-concurso");
+  
+<div class="premium-box">
+  <label for="qtdConcursos">
+    Analisar últimos concursos:
+  </label>
+
+  <input
+    type="number"
+    id="qtdConcursos"
+    min="1"
+    placeholder="Ex: 50"
+    disabled
+  />
+
+  <small class="premium-info">
+    🔒 Recurso premium — escolha quantos concursos deseja analisar
+  </small>
+</div>
 
   // Se não for a página de estatísticas, não faz nada
   if (!freqContainer) return;
