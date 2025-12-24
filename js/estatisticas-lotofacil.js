@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (ultimoConcursoEl) {
       const ultimo = resultados[resultados.length - 1];
       ultimoConcursoEl.innerText =
-        `Concurso ${ultimo.concurso} – ${ultimo.data}`;
+  `Total de concursos analisados: ${resultados.length}`;
     }
   }
 
