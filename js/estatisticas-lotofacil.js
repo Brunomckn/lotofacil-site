@@ -2,46 +2,50 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const API_URL = "https://lotofacil-api-omfo.onrender.com/resultados";
 
+  // ===== SIMULAÇÃO DE USUÁRIO PREMIUM =====
+  const usuarioPremium = true; // false = gratuito
+
+  // ===== ELEMENTOS =====
   const freqContainer = document.getElementById("frequencia-dezenas");
   const paresImparesEl = document.getElementById("pares-impares");
   const baixasAltasEl = document.getElementById("baixas-altas");
   const totalConcursosEl = document.getElementById("total-concursos");
   const ultimoConcursoEl = document.getElementById("ultimo-concurso");
-  
-// ===== SIMULAÇÃO DE USUÁRIO PREMIUM =====
-// Troque para false para modo gratuito
-const usuarioPremium = true;
+  const inputQtd = document.getElementById("qtdConcursos");
+  const btnPremium = document.getElementById("btnPremium");
 
-  // Se não for a página de estatísticas, não faz nada
   if (!freqContainer) return;
-if (usuarioPremium) {
-  const input = document.getElementById("qtdConcursos");
-  const btn = document.getElementById("btnPremium");
 
-  if (input && btn) {
-    input.disabled = false;
-    btn.disabled = false;
-
-    btn.addEventListener("click", function () {
-      carregarEstatisticasComFiltro();
-    });
+  // ===== LIBERA PREMIUM =====
+  if (usuarioPremium && inputQtd && btnPremium) {
+    inputQtd.disabled = false;
+    btnPremium.disabled = false;
+    btnPremium.addEventListener("click", carregarEstatisticas);
   }
-}
 
-  fetch(API_URL)
-    .then(res => res.json())
-    .then(data => {
+  // ===== CARREGA NA ABERTURA =====
+  carregarEstatisticas();
 
-      const resultados = data.resultados || data;
+  // =============================
+  // FUNÇÃO PRINCIPAL
+  // =============================
+  function carregarEstatisticas() {
 
-      const filtrados = aplicarFiltroPremium(resultados);
-      calcularEstatisticas(filtrados);
+    fetch(API_URL)
+      .then(res => res.json())
+      .then(data => {
 
-    })
-    .catch(() => {
-      // falha silenciosa (Render free pode dormir)
-    });
+        const resultados = data.resultados || data;
+        const filtrados = aplicarFiltroPremium(resultados);
+        calcularEstatisticas(filtrados);
 
+      })
+      .catch(() => {});
+  }
+
+  // =============================
+  // ESTATÍSTICAS BASE
+  // =============================
   function calcularEstatisticas(resultados) {
 
     let freq = {};
@@ -55,10 +59,9 @@ if (usuarioPremium) {
 
     resultados.forEach(concurso => {
 
-      if (!concurso.dezenas) return;
+      const dezenas = normalizarDezenas(concurso);
 
-      concurso.dezenas.forEach(n => {
-
+      dezenas.forEach(n => {
         freq[n]++;
         totalNumeros++;
 
@@ -67,8 +70,8 @@ if (usuarioPremium) {
 
         if (n <= 13) baixas++;
         else altas++;
-
       });
+
     });
 
     mostrarFrequencia(freq);
@@ -82,20 +85,51 @@ if (usuarioPremium) {
         `Total de concursos analisados: ${resultados.length}`;
   }
 
-  function mostrarFrequencia(freq) {
+  // =============================
+  // AUXILIARES
+  // =============================
+  function normalizarDezenas(concurso) {
 
-    let lista = Object.entries(freq)
-      .sort((a, b) => b[1] - a[1]);
+    if (concurso.dezenas) return concurso.dezenas;
+
+    let dezenas = [];
+    for (let i = 1; i <= 15; i++) {
+      const v = concurso["Bola" + i];
+      if (v) dezenas.push(Number(v));
+    }
+    return dezenas;
+  }
+
+  function aplicarFiltroPremium(resultados) {
+
+    if (!usuarioPremium || !inputQtd || !inputQtd.value)
+      return resultados;
+
+    const qtd = parseInt(inputQtd.value, 10);
+    if (isNaN(qtd) || qtd <= 0)
+      return resultados;
+
+    return resultados.slice(-qtd);
+  }
+
+  // =============================
+  // RENDERIZAÇÃO
+  // =============================
+  function mostrarFrequencia(freq) {
 
     freqContainer.innerHTML = "";
 
-    lista.forEach(([dezena, vezes]) => {
-      const div = document.createElement("div");
-      div.className = "freq-item";
-      div.innerHTML =
-        `<strong>${dezena.toString().padStart(2, "0")}</strong> ${vezes}x`;
-      freqContainer.appendChild(div);
-    });
+    Object.entries(freq)
+      .sort((a, b) => b[1] - a[1])
+      .forEach(([dezena, vezes]) => {
+
+        const div = document.createElement("div");
+        div.className = "freq-item";
+        div.innerHTML =
+          `<strong>${dezena.toString().padStart(2, "0")}</strong> ${vezes}x`;
+        freqContainer.appendChild(div);
+
+      });
   }
 
   function mostrarDistribuicao(pares, impares, baixas, altas, total) {
@@ -116,34 +150,3 @@ if (usuarioPremium) {
   }
 
 });
-
-function aplicarFiltroPremium(resultados) {
-
-  const input = document.getElementById("qtdConcursos");
-
-  // modo gratuito → retorna tudo
-  if (!input || input.disabled || !input.value) {
-    return resultados;
-  }
-
-  const qtd = parseInt(input.value, 10);
-
-  if (isNaN(qtd) || qtd <= 0) {
-    return resultados;
-  }
-
-  return resultados.slice(-qtd);
-}
-function carregarEstatisticasComFiltro() {
-
-  fetch("https://lotofacil-api-omfo.onrender.com/resultados")
-    .then(res => res.json())
-    .then(data => {
-
-      const resultados = data.resultados || data;
-      const filtrados = aplicarFiltroPremium(resultados);
-
-      calcularEstatisticas(filtrados);
-    })
-    .catch(() => {});
-}
