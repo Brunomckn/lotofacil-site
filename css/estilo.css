@@ -285,4 +285,40 @@ section hr {
     color: #777;
 }
 
+.premium-box {
+    background: #f9fafb;
+    border: 2px dashed #bbb;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 25px auto;
+    max-width: 420px;
+    text-align: center;
+}
+
+.premium-box h3 {
+    margin-bottom: 10px;
+}
+
+.premium-box input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    text-align: center;
+    margin: 8px 0;
+}
+
+.premium-box button {
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    margin-top: 6px;
+}
+
+.premium-info {
+    display: block;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #777;
+}
+
 
