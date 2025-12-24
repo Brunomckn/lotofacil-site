@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const usuarioPremium = true; // false = gratuito
 
   // ===== ELEMENTOS =====
+  const somaInfoEl = document.getElementById("soma-info");
   const freqContainer = document.getElementById("frequencia-dezenas");
   const paresImparesEl = document.getElementById("pares-impares");
   const baixasAltasEl = document.getElementById("baixas-altas");
