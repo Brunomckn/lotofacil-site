@@ -14,6 +14,19 @@ const usuarioPremium = true;
 
   // Se não for a página de estatísticas, não faz nada
   if (!freqContainer) return;
+if (usuarioPremium) {
+  const input = document.getElementById("qtdConcursos");
+  const btn = document.getElementById("btnPremium");
+
+  if (input && btn) {
+    input.disabled = false;
+    btn.disabled = false;
+
+    btn.addEventListener("click", function () {
+      carregarEstatisticasComFiltro();
+    });
+  }
+}
 
   fetch(API_URL)
     .then(res => res.json())
