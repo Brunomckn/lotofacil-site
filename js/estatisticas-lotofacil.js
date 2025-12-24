@@ -110,3 +110,19 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 });
+function aplicarFiltroPremium(resultados) {
+  const input = document.getElementById("qtdConcursos");
+
+  // modo gratuito → retorna tudo
+  if (!input || input.disabled || !input.value) {
+    return resultados;
+  }
+
+  const qtd = parseInt(input.value, 10);
+
+  if (isNaN(qtd) || qtd <= 0) {
+    return resultados;
+  }
+
+  return resultados.slice(-qtd);
+}
