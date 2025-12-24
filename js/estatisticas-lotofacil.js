@@ -32,7 +32,9 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch(API_URL)
     .then(res => res.json())
     .then(resultados => {
-      calcularEstatisticas(resultados);
+      const filtrados = aplicarFiltroPremium(resultados);
+calcularEstatisticas(filtrados);
+
     })
     .catch(() => {
       // Falha silenciosa (API pode estar dormindo no Render)
