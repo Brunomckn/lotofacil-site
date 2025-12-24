@@ -7,6 +7,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const baixasAltasEl = document.getElementById("baixas-altas");
   const totalConcursosEl = document.getElementById("total-concursos");
   const ultimoConcursoEl = document.getElementById("ultimo-concurso");
+  
+// ===== SIMULAÇÃO DE USUÁRIO PREMIUM =====
+// Troque para false para modo gratuito
+const usuarioPremium = true;
 
   // Se não for a página de estatísticas, não faz nada
   if (!freqContainer) return;
