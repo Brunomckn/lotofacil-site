@@ -2,16 +2,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const API_URL = "https://lotofacil-api-omfo.onrender.com/resultados";
 
+  const freqContainer = document.getElementById("frequencia-dezenas");
+  const paresImparesEl = document.getElementById("pares-impares");
+  const baixasAltasEl = document.getElementById("baixas-altas");
+  const totalConcursosEl = document.getElementById("total-concursos");
+  const ultimoConcursoEl = document.getElementById("ultimo-concurso");
+
+  // Se não for a página de estatísticas, não faz nada
+  if (!freqContainer) return;
+
   fetch(API_URL)
     .then(res => res.json())
-    .then(dados => {
-      calcularEstatisticas(dados);
+    .then(resultados => {
+      calcularEstatisticas(resultados);
     })
-    .catch(err => {
-      console.error("Erro ao carregar estatísticas:", err);
+    .catch(() => {
+      // Falha silenciosa (API pode estar dormindo no Render)
     });
 
   function calcularEstatisticas(resultados) {
+
     let freq = {};
     let pares = 0;
     let impares = 0;
@@ -23,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     resultados.forEach(concurso => {
       concurso.dezenas.forEach(n => {
+
         freq[n]++;
         totalNumeros++;
 
@@ -31,35 +42,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (n <= 13) baixas++;
         else altas++;
+
       });
     });
 
     mostrarFrequencia(freq);
     mostrarDistribuicao(pares, impares, baixas, altas, totalNumeros);
+
+    if (totalConcursosEl)
+      totalConcursosEl.innerText = resultados.length;
+
+    if (ultimoConcursoEl) {
+      const ultimo = resultados[resultados.length - 1];
+      ultimoConcursoEl.innerText =
+        `Concurso ${ultimo.concurso} – ${ultimo.data}`;
+    }
   }
 
   function mostrarFrequencia(freq) {
-    let container = document.getElementById("freq-dezenas");
+
     let lista = Object.entries(freq)
       .sort((a, b) => b[1] - a[1]);
 
-    let html = "<ul>";
-    lista.forEach(item => {
-      html += `<li>Dezena ${item[0]}: ${item[1]} vezes</li>`;
-    });
-    html += "</ul>";
+    freqContainer.innerHTML = "";
 
-    container.innerHTML = html;
+    lista.forEach(([dezena, vezes]) => {
+      const div = document.createElement("div");
+      div.className = "freq-item";
+      div.innerHTML = `<strong>${dezena.toString().padStart(2, "0")}</strong>${vezes}x`;
+      freqContainer.appendChild(div);
+    });
   }
 
   function mostrarDistribuicao(pares, impares, baixas, altas, total) {
-    document.getElementById("pares-impares").innerHTML =
-      `Pares: ${pares} (${percentual(pares, total)}%)<br>
-       Ímpares: ${impares} (${percentual(impares, total)}%)`;
 
-    document.getElementById("baixas-altas").innerHTML =
-      `Baixas (1–13): ${baixas} (${percentual(baixas, total)}%)<br>
-       Altas (14–25): ${altas} (${percentual(altas, total)}%)`;
+    if (paresImparesEl)
+      paresImparesEl.innerHTML =
+        `Pares: ${pares} (${percentual(pares, total)}%)<br>
+         Ímpares: ${impares} (${percentual(impares, total)}%)`;
+
+    if (baixasAltasEl)
+      baixasAltasEl.innerHTML =
+        `Baixas (1–13): ${baixas} (${percentual(baixas, total)}%)<br>
+         Altas (14–25): ${altas} (${percentual(altas, total)}%)`;
   }
 
   function percentual(valor, total) {
