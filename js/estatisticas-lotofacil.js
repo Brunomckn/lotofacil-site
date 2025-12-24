@@ -47,45 +47,21 @@ document.addEventListener("DOMContentLoaded", function () {
   // =============================
   // ESTATÍSTICAS BASE
   // =============================
-  function calcularEstatisticas(resultados) {
+  function mostrarSoma(somas) {
 
-    let somas = [];
-    let freq = {};
-    let pares = 0;
-    let impares = 0;
-    let baixas = 0;
-    let altas = 0;
-    let totalNumeros = 0;
+  if (!somaInfoEl || !somas.length) return;
 
-    for (let i = 1; i <= 25; i++) freq[i] = 0;
+  const min = Math.min(...somas);
+  const max = Math.max(...somas);
+  const media = (
+    somas.reduce((a, b) => a + b, 0) / somas.length
+  ).toFixed(1);
 
-    resultados.forEach(concurso => {
-
-      const dezenas = normalizarDezenas(concurso);
-
-      dezenas.forEach(n => {
-        freq[n]++;
-        totalNumeros++;
-
-        if (n % 2 === 0) pares++;
-        else impares++;
-
-        if (n <= 13) baixas++;
-        else altas++;
-      });
-
-    });
-
-    mostrarFrequencia(freq);
-    mostrarDistribuicao(pares, impares, baixas, altas, totalNumeros);
-
-    if (totalConcursosEl)
-      totalConcursosEl.innerText = resultados.length;
-
-    if (ultimoConcursoEl)
-      ultimoConcursoEl.innerText =
-        `Total de concursos analisados: ${resultados.length}`;
-  }
+  somaInfoEl.innerHTML =
+    `Soma mínima: ${min}<br>
+     Soma máxima: ${max}<br>
+     Soma média: ${media}`;
+}
 
   // =============================
   // AUXILIARES
