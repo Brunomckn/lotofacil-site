@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // =============================
   function calcularEstatisticas(resultados) {
 
+    let somas = [];
     let freq = {};
     let pares = 0;
     let impares = 0;
