@@ -189,4 +189,62 @@ footer {
 .topo-com-menu {
     margin-top: 55px;
 }
+/* ================================
+   ESTATÍSTICAS
+================================ */
+
+.resultado {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin: 20px auto;
+    max-width: 900px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.resultado h3 {
+    margin-top: 0;
+    color: #1f3a5f;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#frequencia-dezenas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.freq-item {
+    background: #f4f6f8;
+    border-radius: 8px;
+    padding: 10px 6px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.freq-item strong {
+    display: block;
+    font-size: 16px;
+    color: #1f3a5f;
+}
+
+section hr {
+    margin: 25px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+/* Aviso */
+#aviso {
+    background: #fff3cd;
+    border-left: 5px solid #ffc107;
+    padding: 18px;
+    margin: 30px auto;
+    max-width: 900px;
+    border-radius: 8px;
+    color: #856404;
+}
+
 
