@@ -134,3 +134,16 @@ function aplicarFiltroPremium(resultados) {
 
   return resultados.slice(-qtd);
 }
+function carregarEstatisticasComFiltro() {
+
+  fetch("https://lotofacil-api-omfo.onrender.com/resultados")
+    .then(res => res.json())
+    .then(data => {
+
+      const resultados = data.resultados || data;
+      const filtrados = aplicarFiltroPremium(resultados);
+
+      calcularEstatisticas(filtrados);
+    })
+    .catch(() => {});
+}
