@@ -1,98 +1,53 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Lotofácil Inteligente – Conferir Jogos</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="css/estilo.css">
+  <meta charset="UTF-8">
+  <title>Plataforma de Jogos | Análise e Conferência</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/estilo.css">
 </head>
 
 <body>
-<nav class="menu-fixo">
-  <div class="menu-container">
-    <span class="logo">Lotofácil Inteligente</span>
-    <div class="menu-links">
-      <a href="#ferramenta">Conferir Jogo</a>
-      <a href="#historico">Histórico</a>
-      <a href="#como-funciona">Como Funciona</a>
-    </div>
+
+<!-- HEADER -->
+<header class="topo">
+  <h1>Plataforma de Jogos</h1>
+  <p>Análise estatística e conferência de jogos lotéricos</p>
+</header>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<section>
+  <h2>O que você pode fazer aqui</h2>
+  <p>
+    Este site oferece ferramentas estatísticas para analisar resultados de jogos
+    lotéricos e conferir seus jogos com base em dados históricos oficiais.
+  </p>
+
+  <div class="botoes">
+    <a href="conferir.html">
+      <button>🎯 Conferir meu jogo</button>
+    </a>
+    <a href="estatisticas.html">
+      <button>📊 Ver estatísticas</button>
+    </a>
   </div>
-</nav>
+</section>
 
-  <!-- ===== HEADER ===== -->
-  <header class="topo topo-com-menu">
-    <h1>🎯 Lotofácil Inteligente</h1>
-    <p>Confira seus jogos e analise resultados concurso a concurso</p>
-  </header>
+<!-- AVISO -->
+<section id="aviso">
+  <h3>Aviso importante</h3>
+  <p>
+    Esta plataforma é apenas uma ferramenta estatística e educacional.
+    Não vendemos apostas, não garantimos prêmios e não possuímos vínculo
+    com a Caixa Econômica Federal.
+  </p>
+</section>
 
-  <!-- ===== FERRAMENTA PRINCIPAL ===== -->
-  <section id="ferramenta">
-    <h2>Selecione 15 dezenas</h2>
-
-    <!-- GRID (ID CORRETO PARA O JS) -->
-    <div id="grid" class="grade-numeros"></div>
-
-    <p id="contador">0/15 selecionadas</p>
-
-    <div class="botoes">
-      <button id="gerar">🎲 Gerar jogo inteligente</button>
-      <button id="salvar">💾 Salvar jogo</button>
-      <button id="limpar">🧹 Limpar</button>
-      <button id="conferir">📊 Conferir</button>
-    </div>
-
-    <p id="status-salvo"></p>
-
-    <!-- RESULTADO GERAL -->
-    <div id="resultado" class="resultado"></div>
-  </section>
-
-  <!-- ===== HISTÓRICO CONCURSO A CONCURSO ===== -->
-  <section id="historico">
-    <h2>📅 Conferência concurso a concurso</h2>
-
-    <div class="botoes">
-      <button id="anterior">◀ Anterior</button>
-      <button id="proximo">Próximo ▶</button>
-    </div>
-
-    <p id="info-concurso"></p>
-    <div id="dezenas-sorteadas"></div>
-  </section>
-
-  <!-- ===== COMO FUNCIONA ===== -->
-  <section id="como-funciona">
-    <h2>Como funciona?</h2>
-    <ul>
-      <li>Selecione 15 dezenas da Lotofácil</li>
-      <li>Você pode gerar um jogo inteligente automaticamente</li>
-      <li>Confira quantas vezes esse jogo já teria sido premiado</li>
-      <li>Veja os resultados concurso a concurso</li>
-      <li>Dados baseados em resultados oficiais</li>
-    </ul>
-  </section>
-
-  <!-- ===== AVISO LEGAL ===== -->
-  <section id="aviso">
-    <h3>Aviso importante</h3>
-    <p>
-      Este site é uma ferramenta estatística e educacional.
-      Não vendemos apostas, não garantimos prêmios e não temos vínculo com a Caixa Econômica Federal.
-    </p>
-  </section>
-
-  <!-- ===== FOOTER ===== -->
-  <footer>
-    <p>© 2025 – Lotofácil Inteligente</p>
-    <p>Projeto independente para análise estatística de jogos</p>
-  </footer>
-
-  <!-- JS -->
-  <script src="script.js"></script>
+<!-- RODAPÉ -->
+<footer>
+  <p>© 2025 – Plataforma de Jogos</p>
+  <p>Projeto independente de análise estatística</p>
+</footer>
 
 </body>
 </html>
-
-
-
-
