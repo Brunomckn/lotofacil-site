@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Estatísticas | Plataforma de Jogos</title>
+  <title>Estatísticas da Lotofácil</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/estilo.css">
 </head>
@@ -12,89 +12,91 @@
 <!-- HEADER -->
 <header class="topo">
   <h1>Estatísticas da Lotofácil</h1>
-  <p>Análises baseadas em todos os concursos realizados</p>
+  <p>Análises baseadas em concursos oficiais</p>
 </header>
 
-<!-- CONTEÚDO -->
 <section>
 
   <h2>Visão geral</h2>
   <p>
-    Nesta página você encontra estatísticas históricas da Lotofácil,
-    calculadas a partir de todos os concursos oficiais.
-    Os dados são apenas informativos e não garantem prêmios.
+    Estatísticas históricas da Lotofácil calculadas a partir
+    dos resultados oficiais. Conteúdo educativo e informativo.
   </p>
 
   <hr>
+
+  <!-- ===== PREMIUM ===== -->
   <div class="premium-box">
-  <h3>Estatísticas personalizadas</h3>
+    <h3>Estatísticas personalizadas</h3>
 
-  <label for="qtdConcursos">
-    Quantos concursos deseja analisar?
-  </label>
+    <label for="qtdConcursos">
+      Quantos concursos deseja analisar?
+    </label>
 
-  <input
-    type="number"
-    id="qtdConcursos"
-    min="1"
-    placeholder="Ex: 50"
-    disabled
-  />
+    <input
+      type="number"
+      id="qtdConcursos"
+      min="1"
+      placeholder="Ex: 50"
+      disabled
+    />
 
-  <button id="btnPremium" disabled>
-    Aplicar análise
-  </button>
+    <button id="btnPremium" disabled>
+      Aplicar análise
+    </button>
 
-  <small class="premium-info">
-    🔒 Recurso premium — escolha qualquer quantidade de concursos
-  </small>
-</div>
+    <small class="premium-info">
+      🔒 Recurso premium — escolha qualquer quantidade de concursos
+    </small>
+  </div>
 
-<div class="premium-box">
-  <label for="qtdConcursos">Analisar últimos concursos:</label>
+  <!-- ===== RESULTADOS ===== -->
 
-  <input
-    type="number"
-    id="qtdConcursos"
-    min="1"
-    placeholder="Ex: 50"
-    disabled
-  />
-
-  <small class="premium-info">
-    🔒 Recurso premium — escolha quantos concursos deseja analisar
-  </small>
-</div>
-
-  <!-- TOTAL DE CONCURSOS -->
   <div class="resultado">
     <h3>Total de concursos analisados</h3>
     <p id="total-concursos">Carregando...</p>
   </div>
 
-  <!-- FREQUÊNCIA -->
   <div class="resultado">
     <h3>Frequência das dezenas</h3>
     <div id="frequencia-dezenas">Carregando...</div>
   </div>
 
-  <!-- PARES x ÍMPARES -->
+  <div class="resultado">
+    <h3>Mais sorteadas</h3>
+    <div id="mais-sorteadas">Carregando...</div>
+  </div>
+
+  <div class="resultado">
+    <h3>Mais atrasadas</h3>
+    <div id="mais-atrasadas">Carregando...</div>
+  </div>
+
   <div class="resultado">
     <h3>Pares x Ímpares</h3>
     <p id="pares-impares">Carregando...</p>
   </div>
 
-  <!-- BAIXAS x ALTAS -->
-  <div class="resultado">
-  <h3>Soma das dezenas</h3>
-  <p id="soma-info">Carregando...</p>
-  </div>
   <div class="resultado">
     <h3>Baixas x Altas</h3>
     <p id="baixas-altas">Carregando...</p>
   </div>
 
-  <!-- ÚLTIMO CONCURSO -->
+  <div class="resultado">
+    <h3>Soma das dezenas</h3>
+    <p id="soma-info">Carregando...</p>
+  </div>
+
+  <div class="resultado">
+    <h3>Linhas</h3>
+    <p id="linhas-info">Carregando...</p>
+  </div>
+
+  <div class="resultado">
+    <h3>Colunas</h3>
+    <p id="colunas-info">Carregando...</p>
+  </div>
+
   <div class="resultado">
     <h3>Último concurso registrado</h3>
     <p id="ultimo-concurso">Carregando...</p>
@@ -102,22 +104,17 @@
 
 </section>
 
-<!-- AVISO -->
 <section id="aviso">
   <p>
     As estatísticas apresentadas são baseadas em resultados passados.
-    Não existe qualquer garantia de repetição de padrões em concursos futuros.
+    Não há garantia de repetição de padrões.
   </p>
 </section>
 
-<!-- RODAPÉ -->
 <footer>
-  <p>© 2025 – Plataforma de Jogos</p>
-  <p>Estatísticas históricas da Lotofácil</p>
+  <p>© 2025 – Plataforma de Estatísticas da Lotofácil</p>
 </footer>
 
-<!-- SCRIPT DAS ESTATÍSTICAS -->
 <script src="js/estatisticas-lotofacil.js"></script>
-
 </body>
 </html>
