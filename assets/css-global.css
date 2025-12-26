@@ -1,0 +1,50 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f6f8;
+  text-align: center;
+}
+
+.topo {
+  background: #222;
+  color: #fff;
+  padding: 30px 15px;
+}
+
+.loterias {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px;
+}
+
+.card {
+  width: 260px;
+  padding: 25px;
+  border-radius: 12px;
+  color: #fff;
+  text-decoration: none;
+  transition: transform .2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.lotofacil { background: #7b2cbf; }
+.megasena { background: #1b8f3a; }
+.quina { background: #005f99; }
+.lotomania { background: #f77f00; }
+
+.disabled {
+  opacity: .4;
+  pointer-events: none;
+}
+
+footer {
+  margin-top: 40px;
+  padding: 20px;
+  font-size: 14px;
+  color: #555;
+}
