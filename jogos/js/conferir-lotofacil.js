@@ -5,9 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const grid = document.getElementById("grid");
   const contador = document.getElementById("contador");
   const resultado = document.getElementById("resultado");
-
-  const btnLimpar = document.getElementById("limpar");
   const btnConferir = document.getElementById("conferir");
+  const btnLimpar = document.getElementById("limpar");
 
   let selecionadas = [];
 
@@ -15,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // CRIAR DEZENAS 01–25
   // =========================
   for (let i = 1; i <= 25; i++) {
-
     const d = document.createElement("div");
     d.className = "dezena";
     d.innerText = i.toString().padStart(2, "0");
@@ -44,13 +42,12 @@ document.addEventListener("DOMContentLoaded", function () {
   // LIMPAR
   // =========================
   btnLimpar.addEventListener("click", function () {
-
     selecionadas = [];
+    document.querySelectorAll(".dezena").forEach(d => {
+      d.classList.remove("selecionada");
+    });
     contador.innerText = "0/15 selecionadas";
     resultado.innerHTML = "";
-
-    document.querySelectorAll(".dezena")
-      .forEach(d => d.classList.remove("selecionada"));
   });
 
   // =========================
@@ -59,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
   btnConferir.addEventListener("click", function () {
 
     if (selecionadas.length !== 15) {
-      alert("Selecione exatamente 15 dezenas");
+      alert("Selecione exatamente 15 dezenas.");
       return;
     }
 
