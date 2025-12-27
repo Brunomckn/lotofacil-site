@@ -321,4 +321,33 @@ section hr {
     color: #777;
 }
 
+.grade-numeros {
+  display: grid;
+  grid-template-columns: repeat(5, 60px);
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.dezena {
+  border: 2px solid #7a2cbf;
+  padding: 15px;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.dezena.selecionada {
+  background: #7a2cbf;
+  color: #fff;
+}
+
+.botoes {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin: 15px 0;
+}
+
 
