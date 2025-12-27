@@ -61,6 +61,20 @@ document.addEventListener("DOMContentLoaded", function () {
     contador.innerText = "0/15 selecionadas";
     resultado.innerHTML = "";
   });
+// =========================
+// SALVAR JOGO
+// =========================
+btnSalvar.addEventListener("click", function () {
+
+  if (selecionadas.length !== 15) {
+    alert("Selecione exatamente 15 dezenas antes de salvar.");
+    return;
+  }
+
+  localStorage.setItem("jogo_lotofacil_salvo", JSON.stringify(selecionadas));
+
+  alert("✅ Jogo salvo com sucesso!");
+});
 
   // =========================
   // CONFERIR (CARREGA HISTÓRICO)
