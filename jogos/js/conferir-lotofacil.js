@@ -159,5 +159,22 @@ btnSalvar.addEventListener("click", function () {
     indiceAtual = historico.length - 1;
     mostrarConcurso();
   });
+// =========================
+// CARREGAR JOGO SALVO AO ABRIR
+// =========================
+const jogoSalvo = localStorage.getItem("jogo_lotofacil_salvo");
+
+if (jogoSalvo) {
+  selecionadas = JSON.parse(jogoSalvo);
+
+  document.querySelectorAll(".dezena").forEach(d => {
+    const num = parseInt(d.innerText, 10);
+    if (selecionadas.includes(num)) {
+      d.classList.add("selecionada");
+    }
+  });
+
+  contador.innerText = `${selecionadas.length}/15 selecionadas`;
+}
 
 });
