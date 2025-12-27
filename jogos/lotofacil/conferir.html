@@ -2,53 +2,49 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Conferir Jogo | Plataforma de Jogos</title>
+  <title>Conferir Jogo | Lotofácil</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/estilo.css">
+
+  <!-- CSS GLOBAL + LOTOFÁCIL -->
+  <link rel="stylesheet" href="../../ativos/css-global.css">
+  <link rel="stylesheet" href="../../css/estilo.css">
 </head>
 
 <body>
 
-<!-- HEADER -->
 <header class="topo">
-  <h1>Conferir Jogo – Lotofácil</h1>
-  <p>Veja quantas vezes seu jogo já foi premiado no histórico</p>
+  <h1>Lotofácil</h1>
+  <p>Conferir jogo nos concursos realizados</p>
 </header>
 
-<!-- FERRAMENTA -->
+<!-- MENU INTERNO -->
+<nav class="menu-interno lotofacil">
+  <a href="estatisticas.html" class="menu-item">📊 Estatísticas</a>
+  <a href="conferir.html" class="menu-item ativo">✅ Conferir</a>
+  <a href="gerador.html" class="menu-item premium">🎲 Gerador 🔒</a>
+</nav>
+
 <section>
+
   <h2>Selecione 15 dezenas</h2>
 
-  <!-- GRID DE DEZENAS -->
-  <div id="grid"></div>
+  <div id="grid" class="grade-numeros"></div>
 
   <p id="contador">0/15 selecionadas</p>
 
   <div class="botoes">
     <button id="limpar">Limpar</button>
-    <button id="conferir">Conferir histórico</button>
+    <button id="conferir">Conferir</button>
   </div>
 
-  <!-- RESULTADO -->
   <div id="resultado" class="resultado"></div>
+
 </section>
 
-<!-- AVISO -->
-<section id="aviso">
-  <p>
-    A conferência é baseada em resultados passados.
-    Não há garantia de prêmios futuros.
-  </p>
-</section>
-
-<!-- RODAPÉ -->
 <footer>
-  <p>© 2025 – Plataforma de Jogos</p>
-  <p>Conferência histórica da Lotofácil</p>
+  <p>© 2025 – Plataforma de Estatísticas de Loterias</p>
 </footer>
 
-<!-- SCRIPT -->
-<script src="script.js"></script>
-
+<script src="../../js/conferir-lotofacil.js"></script>
 </body>
 </html>
