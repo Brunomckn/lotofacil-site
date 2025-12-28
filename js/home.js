@@ -1,7 +1,7 @@
 // =============================
 // CONFIGURAÇÃO
 // =============================
-const API_BASE = "https://SEU-ENDPOINT.onrender.com"; // <<< TROQUE AQUI
+const API_BASE = "https://lotofacil-api-xxxx.onrender.com"; // <<< TROQUE AQUI
 
 const LOTERIAS = [
   { id: "lotofacil", nome: "Lotofácil" },
