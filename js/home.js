@@ -1,4 +1,7 @@
-const API = "https://SEU-ENDPOINT.onrender.com";
+// =============================
+// CONFIGURAÇÃO
+// =============================
+const API_BASE = "https://SEU-ENDPOINT.onrender.com"; // <<< TROQUE AQUI
 
 const LOTERIAS = [
   { id: "lotofacil", nome: "Lotofácil" },
@@ -9,25 +12,56 @@ const LOTERIAS = [
   { id: "diadesorte", nome: "Dia de Sorte" }
 ];
 
-const container = document.getElementById("resultados");
-container.innerHTML = "";
+// =============================
+// INÍCIO
+// =============================
+document.addEventListener("DOMContentLoaded", () => {
 
-LOTERIAS.forEach(loteria => {
-  fetch(`${API}/ultimo/${loteria.id}`)
-    .then(res => res.json())
-    .then(data => renderLoteria(loteria, data))
-    .catch(() => {});
+  const container = document.getElementById("resultados");
+
+  if (!container) {
+    console.error("Elemento #resultados não encontrado no HTML");
+    return;
+  }
+
+  container.innerHTML = "";
+
+  LOTERIAS.forEach(loteria => {
+    carregarUltimoResultado(loteria, container);
+  });
+
 });
 
-function renderLoteria(loteria, data) {
+// =============================
+// FUNÇÕES
+// =============================
+function carregarUltimoResultado(loteria, container) {
+
+  fetch(`${API_BASE}/ultimo/${loteria.id}`)
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`Erro API ${loteria.id}`);
+      }
+      return res.json();
+    })
+    .then(data => {
+      renderLoteria(loteria, data, container);
+    })
+    .catch(err => {
+      console.warn(`Falha ao carregar ${loteria.nome}`, err);
+    });
+}
+
+function renderLoteria(loteria, data, container) {
+
+  if (!data || !data.dezenas) return;
 
   const card = document.createElement("div");
   card.className = `card-loteria ${loteria.id}`;
 
-  let dezenasHtml = "";
-  data.dezenas.forEach(n => {
-    dezenasHtml += `<span class="dezena">${n.toString().padStart(2,"0")}</span>`;
-  });
+  const dezenasHtml = data.dezenas
+    .map(n => `<span class="dezena">${n.toString().padStart(2, "0")}</span>`)
+    .join("");
 
   card.innerHTML = `
     <h2>${loteria.nome}</h2>
